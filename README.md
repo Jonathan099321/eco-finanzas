@@ -1,0 +1,1 @@
+# EcoFinanzas (skeleton)\n\nAbre `public/index.html` para comenzar. Estructura modular con HTML/CSS/JS.\n

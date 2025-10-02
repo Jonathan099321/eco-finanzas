@@ -1,0 +1,126 @@
+/* styles/pages/login.css */
+
+/* ===== Fondo de toda la página ===== */
+:root{
+  --ink:#0e1726; --muted:#9aa4b2; --card:#0f1a2b; --line:#1f2a3b;
+  --radius:20px; --shadow:0 20px 60px rgba(0,0,0,.35);
+  --grad: linear-gradient(90deg, #628CFF 0%, #8B4DFF 100%);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:#e6edf7; font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background: #0b1220 url("/assets/images/fondopantalla.jpg") center/cover fixed no-repeat;
+}
+
+/* oscurece un pelín para que todo contraste mejor */
+body::before{
+  content:""; position:fixed; inset:0;
+  background: radial-gradient(1200px 600px at 20% 15%, rgba(21,28,46,.55), transparent 70%),
+              radial-gradient(1000px 700px at 85% 25%, rgba(18,25,41,.45), transparent 60%),
+              rgba(6,10,20,.25);
+  pointer-events:none;
+}
+
+/* ===== Layout centrado ===== */
+.wrap{
+  min-height:100dvh; display:grid; place-items:center;
+  padding:32px;
+}
+
+.login-grid{
+  width:min(1200px, 100%);
+  display:grid; grid-template-columns:1.1fr .9fr; gap:24px;
+}
+
+/* ===== Hero (lado izquierdo) ===== */
+.hero{
+  position:relative; overflow:hidden;
+  border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:32px 28px 34px;
+  border:1px solid rgba(255,255,255,.07);
+}
+
+/* Sub-fondo del hero: TU imagen `fondo.jpg` */
+.hero::before{
+  content:""; position:absolute; inset:0; z-index:0;
+  background:
+    linear-gradient(180deg, rgba(8,13,25,.55), rgba(8,13,25,.55)),
+    url("/assets/images/fondo.jpg") center/cover no-repeat;
+  filter:saturate(1.05) contrast(1.02);
+}
+
+/* una viñeta suave en el borde para que se integre con el fondo general */
+.hero::after{
+  content:""; position:absolute; inset:0; z-index:0;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04), inset 0 0 80px rgba(0,0,0,.35);
+  border-radius:inherit;
+}
+
+.hero > *{ position:relative; z-index:1; }
+
+/* Tarjeta blanca para el logo */
+.brand-frame{
+  background:#fff; border-radius:18px;
+  padding:18px 24px;
+  box-shadow:0 12px 40px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.35);
+  width:min(680px, 100%); margin:0 auto 18px;
+}
+
+/* Logo */
+.brand{
+  display:block; width:min(560px, 100%); height:auto; margin-inline:auto;
+}
+
+/* Títulos centrados */
+.hero-title{
+  margin:12px 0 8px; text-align:center;
+  font-size:clamp(28px, 3.2vw, 40px); line-height:1.15; font-weight:800;
+  text-shadow:0 6px 24px rgba(0,0,0,.35);
+}
+.hero-sub{
+  margin:0; text-align:center; color:var(--muted);
+}
+
+/* ===== Panel de login (lado derecho) ===== */
+.card{
+  background: rgba(14,22,36,.85);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:22px 22px 20px;
+  backdrop-filter:saturate(135%) blur(6px);
+}
+
+.auth h2{ margin:0 0 14px; font-size:22px }
+
+label{display:block; margin:12px 0 6px; color:#c7d2e1; font-weight:700}
+input{
+  width:100%; padding:12px 14px; border-radius:12px;
+  border:1px solid var(--line); background:#0b1422; color:#e6edf7;
+  outline:none;
+}
+input:focus{ border-color:#6b8cff; box-shadow:0 0 0 3px rgba(107,140,255,.2) }
+
+.row{ display:flex; align-items:center; gap:10px }
+.check{ display:flex; align-items:center; gap:8px; cursor:pointer }
+
+.btn{
+  appearance:none; border:0; border-radius:12px; padding:12px 16px;
+  font-weight:800; cursor:pointer; background:#1b2a44; color:#e6edf7;
+}
+.btn.grad{
+  background:var(--grad); color:#fff; width:100%;
+  margin-top:10px; box-shadow:0 8px 26px rgba(98,140,255,.35);
+}
+.btn.link{
+  background:transparent; border:1px dashed rgba(255,255,255,.25);
+  color:#cfe1ff;
+}
+
+.muted{ color:#9aa7bd }
+
+/* ===== Responsive ===== */
+@media (max-width: 980px){
+  .login-grid{ grid-template-columns:1fr }
+}

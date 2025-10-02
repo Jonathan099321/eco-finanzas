@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resumen · EcoFinanzas</title>
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/ui.css">
+  
+</head>
+<body>
+  <header class="appbar">
+    <div class="wrap bar">
+      <div class="logo" aria-label="EcoFinanzas">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M5 19l4-4M15 9l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>EcoFinanzas</span>
+      </div>
+      <div class="menu">
+        <button id="menuBtn" class="hamb" aria-label="Menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div id="menuPanel" class="menu-panel" role="menu" aria-hidden="true">
+          <div id="miTheme" class="menu-item">Modo oscuro</div>
+          <div id="miLang" class="menu-item">English / Español</div>
+          <div class="divider"></div>
+          <div id="miSupport" class="menu-item">Soporte</div>
+          <div id="miLogout" class="menu-item">Cerrar sesión</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <link rel="stylesheet" href="../styles/pages/resumen.css">
+<section class="card">
+  <div class="card-hd">
+    <h1>Resumen Financiero</h1>
+    <p class="sub">Totales, gráficas y metas de ahorro.</p>
+  </div>
+  <div class="card-bd">
+    <div class="kv">
+      <div class="muted">Ingreso mensual</div><div id="v_ingresos">—</div>
+      <div class="muted">Gasto total</div><div id="v_gastos">—</div>
+      <div class="muted">Dinero libre</div><div id="v_libre">—</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="alertasBox" style="display:none; margin-bottom:18px">
+  <div class="hd"><strong>Alertas</strong></div>
+  <div class="bd">
+    <div class="alert-card" id="alertasContent"></div>
+  </div>
+</section>
+
+<section class="card" style="margin-top:18px">
+  <div class="card-hd"><strong>Gráficas</strong></div>
+  <div class="card-bd row two">
+    <div><canvas id="pie"></canvas></div>
+    <div><canvas id="bars"></canvas></div>
+  </div>
+</section>
+
+<!-- Gastos diarios / imprevistos -->
+<section class="card" style="margin-top:18px">
+  <div class="card-hd"><strong>Gastos diarios / imprevistos</strong></div>
+  <div class="card-bd">
+    <div class="row two">
+      <div>
+        <label for="dailyDesc">Descripción</label>
+        <input id="dailyDesc" type="text" placeholder="Ej. comida fuera, farmacia, taxi extra">
+      </div>
+      <div>
+        <label for="dailyAmount">Monto</label>
+        <input id="dailyAmount" type="number" min="0" step="0.01" placeholder="$">
+      </div>
+    </div>
+
+    <div class="row two">
+      <div>
+        <label for="dailyDate">Fecha</label>
+        <input id="dailyDate" type="date">
+      </div>
+      <div>
+        <label for="dailyTag">Etiqueta (opcional)</label>
+        <input id="dailyTag" type="text" placeholder="Ej. comida, salud, traslado">
+      </div>
+    </div>
+
+    <div class="actions" style="justify-content:flex-start">
+      <button class="btn primary" id="addDailyBtn" type="button">Agregar gasto</button>
+      <button class="btn" id="clearDailiesBtn" type="button" style="background:#fee2e2;color:#b91c1c">
+        Borrar gastos del mes
+      </button>
+    </div>
+
+    <div class="block" style="margin-top:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong>Historial del mes</strong>
+        <div> Total: <span id="dailiesTotal">—</span></div>
+      </div>
+      <div id="dailiesList" style="margin-top:8px">
+        <p class="muted" id="dailiesEmpty">Aún no hay gastos diarios.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Gastos de otros meses -->
+<section class="card" id="nextBlock" style="margin-top:12px; display:none">
+  <div class="card-bd">
+    <div class="block" style="margin-top:0">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong>Gastos de otros meses</strong>
+        <div>Total (no se suma a este mes): <span id="dailiesTotalNext">—</span></div>
+      </div>
+      <div id="dailiesNextList" style="margin-top:8px">
+        <p class="muted" id="dailiesNextEmpty">No hay gastos en otros meses.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Acciones -->
+<section class="card" style="margin-top:18px">
+  <div class="hd"><strong>Acciones</strong></div>
+  <div class="bd actions" style="justify-content:flex-start">
+    <button class="btn ghost" id="btnPngPie" type="button">Descargar dona (PNG)</button>
+    <button class="btn ghost" id="btnPngBars" type="button">Descargar barras (PNG)</button>
+    <button class="btn ghost" id="btnJson" type="button">Descargar resumen (JSON)</button>
+    <button class="btn" id="btnClearGoals" type="button" style="background:#fee2e2;color:#b91c1c">Borrar todas las metas</button>
+    <button class="btn" id="btnResetAll" type="button" style="background:#ffe8c2;color:#92400e">Reset datos (demo)</button>
+    <button class="btn primary" id="btnPdf" type="button">Descargar PDF del resumen</button>
+  </div>
+</section>
+
+<!-- Detalle por categoría -->
+<section class="card" style="margin-top:18px">
+  <div class="hd"><strong>Detalle de categorías</strong></div>
+  <div class="bd">
+    <div class="kv" id="catsKV"></div>
+  </div>
+</section>
+
+<!-- ==================== METAS GUARDADAS ==================== -->
+<section class="card" style="margin-top:18px">
+  <div class="card-hd" style="display:flex;justify-content:space-between;align-items:center">
+    <strong>Metas guardadas</strong>
+    <button class="btn" id="btnClearGoals" type="button" style="background:#fee2e2;color:#b91c1c">Eliminar todas</button>
+  </div>
+  <div class="card-bd">
+    <p id="goalsEmpty" class="muted">Aún no tienes metas guardadas.</p>
+    <div id="goalsList"></div>
+  </div>
+</section>
+
+<!-- ==================== PLAN DE AHORRO ==================== -->
+<section class="card" style="margin-top:18px">
+  <div class="card-hd"><strong>Plan de ahorro</strong></div>
+  <div class="card-bd row two">
+    <div>
+      <label for="goalName">Meta</label>
+      <input id="goalName" type="text" placeholder="Teléfono, ropa, carro, casa..." />
+    </div>
+    <div>
+      <label for="goalAmount">Monto objetivo</label>
+      <input id="goalAmount" type="number" min="0" inputmode="decimal" placeholder="$" />
+    </div>
+    <div>
+      <label for="goalDate">Fecha objetivo</label>
+      <input id="goalDate" type="date" />
+    </div>
+
+    <div style="margin-top:12px; display:flex; gap:10px;">
+      <!-- Calcula y solo muestra el resultado -->
+      <button class="btn primary" id="goalBtn" type="button">Calcular</button>
+      <!-- Guarda la meta con el cálculo y el consejo mostrados -->
+      <button class="btn" id="goalSaveBtn" type="button" disabled>Guardar meta</button>
+    </div>
+
+    <div style="grid-column:1/-1; margin-top:6px">
+      <p><strong>Aporte sugerido por mes:</strong> <span id="goalMonthly">—</span></p>
+      <p id="goalAdvice" class="muted">—</p>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  </main>
+
+  <!-- Modal Soporte -->
+  <div id="supportModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h2>Bienvenido a soporte técnico</h2>
+      <p>Cualquier problema que presente la página, escríbenos abajo tu problema y lo resolveremos lo más pronto posible.</p>
+      <textarea id="supportText" placeholder="Describe tu problema..." style="width:100%;min-height:140px;padding:12px;border:1px solid var(--line);border-radius:10px"></textarea>
+      <div class="modal-actions">
+        <button id="closeSupport" class="btn ghost" type="button">Cancelar</button>
+        <button id="sendSupport" class="btn primary" type="button">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">Se ha enviado tu reporte satisfactoriamente</div>
+
+<script>
+(function(){
+  try {
+    var ses = JSON.parse(localStorage.getItem('eco_current_user') || 'null');
+    if (!ses || !ses.email) {
+      window.location.replace('/public/login.html');
+    }
+  } catch (e) {
+    window.location.replace('/public/login.html');
+  }
+})();
+</script>
+
+
+  <!-- Shim: aislar storage por usuario -->
+  <script src="../scripts/utils/scoped-localstorage-shim.js"></script>
+
+  <!-- Migración puntual de metas (global -> por usuario) -->
+  <script src="../scripts/utils/migrate-goals-once.js"></script>
+
+  <!-- Tus módulos -->
+  <script type="module" src="../scripts/ui/menu.js"></script>
+
+  <!-- El adaptador VA PRIMERO -->
+  <script type="module" src="../scripts/pages/resumen-goals-adapter.js"></script>
+
+<!-- Luego tu lógica del resumen -->
+  <script type="module" src="../scripts/pages/resumen.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login · EcoFinanzas</title>
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/ui.css">
+  
+</head>
+<body>
+  <header class="appbar">
+    <div class="wrap bar">
+      <div class="logo" aria-label="EcoFinanzas">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M5 19l4-4M15 9l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>EcoFinanzas</span>
+      </div>
+      <div class="menu">
+        <button id="menuBtn" class="hamb" aria-label="Menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div id="menuPanel" class="menu-panel" role="menu" aria-hidden="true">
+          <div id="miTheme" class="menu-item">Modo oscuro</div>
+          <div id="miLang" class="menu-item">English / Español</div>
+          <div class="divider"></div>
+          <div id="miSupport" class="menu-item">Soporte</div>
+          <div id="miLogout" class="menu-item">Cerrar sesión</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+  <div class="card-hd">
+    <h1>Inicia sesión</h1>
+    <p class="sub">Demo de login (no funcional por ahora)</p>
+  </div>
+  <div class="card-bd row two">
+    <div>
+      <label for="email">Correo</label>
+      <input id="email" type="text" placeholder="tucorreo@ejemplo.com" />
+    </div>
+    <div>
+      <label for="pwd">Contraseña</label>
+      <input id="pwd" type="password" placeholder="••••••••" />
+    </div>
+    <div class="actions" style="grid-column:1/-1">
+      <a class="btn ghost" href="./wizard.html">Crear cuenta</a>
+      <a class="btn primary" href="./wizard.html">Entrar</a>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <!-- Modal Soporte -->
+  <div id="supportModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h2>Bienvenido a soporte técnico</h2>
+      <p>Cualquier problema que presente la página, escríbenos abajo tu problema y lo resolveremos lo más pronto posible.</p>
+      <textarea id="supportText" placeholder="Describe tu problema..." style="width:100%;min-height:140px;padding:12px;border:1px solid var(--line);border-radius:10px"></textarea>
+      <div class="modal-actions">
+        <button id="closeSupport" class="btn ghost" type="button">Cancelar</button>
+        <button id="sendSupport" class="btn primary" type="button">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">Se ha enviado tu reporte satisfactoriamente</div>
+
+  <!-- Shim: aislar storage por usuario -->
+  <script src="../scripts/utils/scoped-localstorage-shim.js"></script>
+
+  <!-- Migración puntual de metas (global -> por usuario) -->
+  <script src="../scripts/utils/migrate-goals-once.js"></script>
+
+  <!-- Tus módulos -->
+  <script type="module" src="../scripts/ui/menu.js"></script>
+  <script type="module" src="../scripts/pages/resumen.js"></script>
+</body>
+</html>

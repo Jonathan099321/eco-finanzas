@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wizard · EcoFinanzas</title>
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/ui.css">
+  <link rel="stylesheet" href="../styles/pages/wizard.css">
+</head>
+<body>
+  <header class="appbar">
+    <div class="wrap bar">
+      <div class="logo" aria-label="EcoFinanzas">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M5 19l4-4M15 9l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>EcoFinanzas</span>
+      </div>
+
+      <div id="stepText" class="step" style="color:#5b6573;font-weight:700">Paso 1 de 2</div>
+
+      <!-- Menú -->
+      <div class="menu">
+        <button id="menuBtn" class="hamb" aria-label="Menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div id="menuPanel" class="menu-panel" role="menu" aria-hidden="true">
+          <div id="miTheme" class="menu-item">Modo oscuro</div>
+          <div id="miLang" class="menu-item">English / Español</div>
+          <div class="divider"></div>
+          <div id="miSupport" class="menu-item">Soporte</div>
+          <div id="miLogout" class="menu-item">Cerrar sesión</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<main class="wrap">
+  <!-- PASO 1: Perfil del hogar -->
+  <section id="view-1" class="card" aria-labelledby="ttl1">
+    <div class="card-hd">
+      <h1 id="ttl1">Perfil del hogar</h1>
+      <p class="sub">Estas respuestas definirán qué preguntas verás en el siguiente paso.</p>
+    </div>
+    <div class="card-bd">
+      <form id="form1" class="row">
+        <div class="block">
+          <h3>Estado Civil</h3>
+          <div class="row">
+            <label><input type="radio" name="estadoCivil" value="soltero" required> Soltero/a</label>
+            <label><input type="radio" name="estadoCivil" value="pareja_sin_hijos"> Casado/a o en pareja sin hijos</label>
+            <label><input type="radio" name="estadoCivil" value="pareja_con_hijos"> Casado/a o en pareja con hijos</label>
+            <label><input type="radio" name="estadoCivil" value="otro"> Otro</label>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="block">
+            <h3>Dependientes</h3>
+            <p class="muted">Incluye hijos, adultos mayores o personas con discapacidad.</p>
+            <div class="switch" role="group" aria-label="Tiene dependientes">
+              <input id="dep_si" type="radio" name="tieneDependientes" value="si">
+              <label for="dep_si">Sí</label>
+              <input id="dep_no" type="radio" name="tieneDependientes" value="no" checked>
+              <label for="dep_no">No</label>
+            </div>
+          </div>
+
+          <div class="block">
+            <h3>Ingresos del Hogar</h3>
+            <label class="muted" style="font-weight:700">¿Tu pareja aporta ingresos?</label>
+            <div class="switch" role="group" aria-label="Pareja aporta">
+              <input id="p_si" type="radio" name="parejaAporta" value="si">
+              <label for="p_si">Sí</label>
+              <input id="p_no" type="radio" name="parejaAporta" value="no" checked>
+              <label for="p_no">No</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Apoyo a Terceros</h3>
+          <div class="switch" role="group" aria-label="Apoya terceros">
+            <input id="t_si" type="radio" name="apoyaTerceros" value="si">
+            <label for="t_si">Sí</label>
+            <input id="t_no" type="radio" name="apoyaTerceros" value="no" checked>
+            <label for="t_no">No</label>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" type="submit">Continuar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- PASO 2: Siempre base + condicionales -->
+  <section id="view-2" class="card" aria-labelledby="ttl2" hidden>
+    <div class="card-hd">
+      <h1 id="ttl2">Tu información mensual</h1>
+      <p class="sub">Siempre verás preguntas base. Si aplican, agregamos otras según tu perfil.</p>
+    </div>
+    <div class="card-bd">
+      <form id="form2" class="row">
+        <!-- BASE -->
+        <div id="flowBase" class="flow" style="display:block" aria-live="polite">
+          <h3>Datos base <span class="badge">Siempre</span></h3>
+          <div class="row two">
+            <div>
+              <label for="ingresoMensual">¿Cuánto ganas al mes?</label>
+              <input id="ingresoMensual" name="ingresoMensual" type="number" min="0" placeholder="$" />
+            </div>
+            <div>
+              <label for="otrosIngresos">Otros ingresos (opcional)</label>
+              <input id="otrosIngresos" name="otrosIngresos" type="number" min="0" placeholder="$" />
+            </div>
+          </div>
+
+          <div class="row two">
+            <div>
+              <label for="serviciosBasicos">Luz, agua, internet y cable</label>
+              <input id="serviciosBasicos" name="serviciosBasicos" type="number" min="0" placeholder="$" />
+            </div>
+            <div>
+              <label for="suscripciones">Suscripciones (Netflix, Spotify, Disney+, HBO, etc.)</label>
+              <input id="suscripciones" name="suscripciones" type="number" min="0" placeholder="$" />
+            </div>
+          </div>
+
+          <div class="row two">
+            <div>
+              <label for="transportePublico">Transporte público (bus, taxi, mototaxi, Uber, etc.)</label>
+              <input id="transportePublico" name="transportePublico" type="number" min="0" placeholder="$" />
+            </div>
+            <div>
+              <label for="gasolina">Gasolina (si tienes auto)</label>
+              <input id="gasolina" name="gasolina" type="number" min="0" placeholder="$" />
+            </div>
+          </div>
+
+          <div class="row two">
+            <div>
+              <label for="alimentacion">Alimentación</label>
+              <input id="alimentacion" name="alimentacion" type="number" min="0" placeholder="$" />
+            </div>
+            <div>
+              <label for="renta">Renta / Hipoteca</label>
+              <input id="renta" name="renta" type="number" min="0" placeholder="$" />
+            </div>
+          </div>
+
+          <div class="row two">
+            <div>
+              <label for="salud">Salud (seguro, medicinas)</label>
+              <input id="salud" name="salud" type="number" min="0" placeholder="$" />
+            </div>
+            <div>
+              <label for="deudas">Deudas o préstamos (tarjeta, banco)</label>
+              <input id="deudas" name="deudas" type="number" min="0" placeholder="$" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Apoyo a terceros -->
+        <div id="flowApoyo" class="flow" aria-live="polite">
+          <h3>Apoyo a Terceros <span class="badge">Si apoyas</span></h3>
+          <div class="row two">
+            <div>
+              <label for="relacion">Relación</label>
+              <select id="relacion" name="relacion">
+                <option value="Padres">Padres</option>
+                <option value="Abuelos">Abuelos</option>
+                <option value="Hermano/a">Hermano/a</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+            <div>
+              <label for="frecuenciaApoyo">Frecuencia</label>
+              <select id="frecuenciaApoyo" name="frecuenciaApoyo">
+                <option value="Mensual">Mensual</option>
+                <option value="Ocasional">Ocasional</option>
+              </select>
+            </div>
+          </div>
+          <div class="row two">
+            <div>
+              <label for="montoApoyo">¿Cuánto dinero destinas al mes?</label>
+              <input id="montoApoyo" name="montoApoyo" type="number" min="0" placeholder="$" />
+            </div>
+            <div>
+              <label for="conceptoApoyo">Concepto</label>
+              <select id="conceptoApoyo" name="conceptoApoyo">
+                <option value="Alimentación">Alimentación</option>
+                <option value="Salud">Salud</option>
+                <option value="Educación">Educación</option>
+                <option value="Vivienda">Vivienda</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dependientes -->
+        <div id="flowDependientes" class="flow" aria-live="polite">
+          <h3>Gastos por Dependientes <span class="badge">Si tienes dependientes</span></h3>
+          <div class="row two">
+            <div>
+              <label for="cantidadDependientes">¿Cuántos dependientes?</label>
+              <input id="cantidadDependientes" name="cantidadDependientes" type="number" min="1" value="1" />
+            </div>
+            <div>
+              <label for="gastoMensualDependientes">Gasto mensual estimado</label>
+              <input id="gastoMensualDependientes" name="gastoMensualDependientes" type="number" min="0" placeholder="$" />
+            </div>
+          </div>
+          <div class="row two">
+            <div>
+              <label for="educacionDep">Educación</label>
+              <input id="educacionDep" name="educacionDep" type="number" min="0" placeholder="$" />
+            </div>
+            <div>
+              <label for="saludDep">Salud</label>
+              <input id="saludDep" name="saludDep" type="number" min="0" placeholder="$" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Pareja -->
+        <div id="flowPareja" class="flow" aria-live="polite">
+          <h3>Relación de pareja <span class="badge">Si estás en pareja</span></h3>
+          <div id="parejaNoAporta" class="row two" style="display:none">
+            <div>
+              <label for="montoParaPareja">¿Cuánto destinas a tu pareja al mes?</label>
+              <input id="montoParaPareja" name="montoParaPareja" type="number" min="0" placeholder="$" />
+            </div>
+            <div>
+              <label for="comentarioPareja">Comentario (opcional)</label>
+              <input id="comentarioPareja" name="comentarioPareja" type="text" placeholder="Ej. salidas, regalos, apoyo ocasional" />
+            </div>
+          </div>
+          <div id="parejaSiAporta" class="row two" style="display:none">
+            <div>
+              <label for="montoParejaAporta">¿Cuánto aporta tu pareja al mes?</label>
+              <input id="montoParejaAporta" name="montoParejaAporta" type="number" min="0" placeholder="$" />
+            </div>
+            <div>
+              <label for="comentarioParejaAporta">Comentario (opcional)</label>
+              <input id="comentarioParejaAporta" name="comentarioParejaAporta" type="text" placeholder="Ej. cómo se reparten gastos, notas" />
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn ghost" type="button" id="back1">Anterior</button>
+          <button class="btn primary" type="submit">Siguiente</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+  <!-- Modal Soporte -->
+  <div id="supportModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h2>Bienvenido a soporte técnico</h2>
+      <p>Cualquier problema que presente la página, escríbenos abajo tu problema y lo resolveremos lo más pronto posible.</p>
+      <textarea id="supportText" placeholder="Describe tu problema..."></textarea>
+      <div class="modal-actions">
+        <button id="closeSupport" class="btn ghost" type="button">Cancelar</button>
+        <button id="sendSupport" class="btn primary" type="button">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">Se ha enviado tu reporte satisfactoriamente</div>
+
+  <!-- Shim: aislar storage por usuario -->
+  <script src="../scripts/utils/scoped-localstorage-shim.js"></script>
+
+  <!-- Migración puntual de metas (global -> por usuario) -->
+  <script src="../scripts/utils/migrate-goals-once.js"></script>
+
+  <!-- Tus módulos -->
+  <script type="module" src="../scripts/ui/menu.js"></script>
+  <script type="module" src="../scripts/pages/resumen.js"></script>
+</body>
+</html>

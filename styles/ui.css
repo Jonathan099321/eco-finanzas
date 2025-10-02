@@ -1,0 +1,88 @@
+/* UI components shared */
+.grid2{display:grid;gap:18px}
+@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
+.row{display:grid;gap:14px}
+@media(min-width:860px){.row.two{grid-template-columns:1fr 1fr}}
+label{display:block;font-weight:600;margin:8px 0 6px}
+input[type="text"],input[type="number"],select,textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px}
+.block{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px}
+.muted{color:var(--muted)}
+.badge{display:inline-block;background:#eef2ff;color:#1f3bb3;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;margin-left:8px}
+.kv{display:grid;grid-template-columns:220px 1fr;gap:8px 14px}
+.actions{display:flex;justify-content:flex-end;gap:12px;padding:18px 22px}
+
+/* Hamburger menu + modal + toast */
+.hamb{border:0;background:transparent;cursor:pointer;padding:8px;border-radius:10px}
+.hamb svg{width:22px;height:22px}
+.menu{position:relative}
+.menu-panel{position:absolute;right:0;top:44px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);min-width:230px;display:none;z-index:50}
+.menu-panel.open{display:block}
+.menu-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-weight:600}
+.menu-item:hover{background:#eef2ff}
+.divider{height:1px;background:var(--line);margin:6px 0}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center;z-index:60}
+.modal.open{display:flex}
+.modal-card{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);max-width:640px;width:92%;padding:18px}
+.modal-card h2{margin-top:0}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:12px}
+.toast{position:fixed;right:20px;bottom:20px;background:#0ea5e9;color:#fff;padding:10px 14px;border-radius:10px;display:none;z-index:70}
+/* Dark tweaks */
+body.dark .btn.ghost{background:#1f2937;color:#e5e7eb}
+body.dark .menu-item:hover{background:#1f2937}
+.goal{border:1px solid var(--line);border-radius:10px;padding:12px}
+.goal{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px}
+@media print {
+  .appbar, .menu, .toast, .actions { display: none !important; }
+  .card { box-shadow: none; border-color: #ddd; }
+  body { background: #fff; }
+}
+/* Alertas (semáforo) */
+.warn { color:#b91c1c; font-weight:700 }
+.badge-warn {
+  display:inline-block;background:#fee2e2;color:#b91c1c;
+  border-radius:999px;padding:2px 8px;font-size:12px;font-weight:700;margin-left:8px
+}
+.alert-card {
+  border:1px solid #fecaca;background:#fff7f7;color:#7f1d1d;
+  border-radius:12px;padding:12px
+}
+/* Ayudas y errores */
+.hint { font-size:12px; color: var(--muted); margin-top:4px }
+.err  { font-size:12px; color:#b91c1c; margin-top:4px }
+.input-error { border-color:#ef4444 !important; background:#fff7f7 }
+
+/* --- Validaciones Wizard --- */
+.field.invalid input,
+.field.invalid select {
+  border-color: #dc2626 !important;
+  background: #fff1f2;
+}
+.error-msg{
+  color:#dc2626;
+  font-size:12px;
+  margin-top:6px;
+}
+.preview-box{
+  margin-top:16px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+  background:#f8fafc;
+}
+.preview-box .pill{
+  margin-left:0;
+}
+
+/* Switch tipo pastilla */
+.switch{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.switch input{display:none}
+.switch label{padding:8px 14px;font-weight:700;cursor:pointer;color:#42526b}
+.switch input:checked+label{background:var(--brand);color:#fff}
+
+/* Bloques condicionales (flow) */
+.flow{border:1px dashed var(--line);border-radius:12px;padding:16px;margin-top:16px}
+.flow h3{margin-top:0}
+
+
+
+
